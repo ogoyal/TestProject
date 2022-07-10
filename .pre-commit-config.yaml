@@ -1,0 +1,22 @@
+default_stages: [commit, push]
+default_language_version:
+  python: python3.8
+repos:
+  - repo: https://github.com/ogoyal/TestProject
+    rev: 21.8b0
+    hooks:
+    - id: black
+      args: [
+        --line-length=80,
+        --target-version=py38
+      ]
+      exclude: ^(venv/|docs/)
+      types: ['python']
+  - repo: local
+    hooks:
+      - id: update version
+        name: update version
+        entry: python update_version.py
+        language: system
+        always_run: true
+        pass_filenames: false
