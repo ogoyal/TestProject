@@ -36,7 +36,6 @@ def main():
         if dir:
             headcommit = mygit.rev_list("HEAD", dir).split()[-1]
             timestamp = mygit.show("-s", "--format=%cd", "--date=format:%B %d, %Y", headcommit).split("\n")[-1]
-            print(headcommit, timestamp)
             commit_dict = {"headcommit": headcommit, "timestamp": timestamp}
             update_version_file(f"{dir}/version.json", commit_dict)
         else:
