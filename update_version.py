@@ -26,13 +26,11 @@ def update_version_file(file, commit_dict):
 def main():
     root_dir = os.getcwd()
     repo = git.Repo(root_dir)
+    mygit = repo.git
 
-    changedFiles = [ item.a_path for item in repo.index.diff(None) ]
-    untracked_files = repo.untracked_files
+    git_added_files = mygit.diff("--cached", "--name-only").split("\n")
 
-    modified_or_new = changedFiles + untracked_files
-
-    for file in modified_or_new:
+    for file in git_added_files:
         dir = get_file_directory(file)
         headcommit = repo.head.commit
         timestamp = time.strftime("%B %d, %Y", time.gmtime(headcommit.committed_date))
